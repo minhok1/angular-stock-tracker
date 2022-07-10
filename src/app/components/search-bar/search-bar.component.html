@@ -7,10 +7,12 @@
       placeholder="Enter stock"
       [formControl]="myControl"
       [matAutocomplete]="auto"
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchTextChange()"
     />
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of options" [value]="option">
-        {{ option }}
+      <mat-option *ngFor="let option of filteredOptions" [value]="option">
+        {{ option.symbol }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

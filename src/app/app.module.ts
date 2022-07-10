@@ -7,6 +7,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
@@ -24,6 +25,7 @@ const appRoutes: Routes = [{ path: '', component: SearchPageComponent }];
     MatSelectModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
   ],
   providers: [],
