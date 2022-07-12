@@ -8,6 +8,7 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgChartsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
   ],
   providers: [],

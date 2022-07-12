@@ -18,6 +18,7 @@ export class SearchService {
   }
 
   getIntradayPrices(stock: string): Observable<any> {
+    console.log(priceUrl.replace('{symbol}', stock) + apiKey);
     return this.http.get(priceUrl.replace('{symbol}', stock) + apiKey);
   }
 }
