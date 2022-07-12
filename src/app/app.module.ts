@@ -12,11 +12,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ResultsPageComponent } from './components/results-page/results-page.component';
 
-const appRoutes: Routes = [{ path: '', component: SearchPageComponent }];
+const appRoutes: Routes = [
+  { path: '', component: SearchPageComponent },
+  { path: 'result/:symbol', component: ResultsPageComponent },
+];
 
 @NgModule({
-  declarations: [AppComponent, SearchPageComponent, SearchBarComponent],
+  declarations: [
+    AppComponent,
+    SearchPageComponent,
+    SearchBarComponent,
+    ResultsPageComponent,
+  ],
   imports: [
     BrowserModule,
     MatAutocompleteModule,
