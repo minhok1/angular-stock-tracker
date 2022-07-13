@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap, timer } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -8,30 +8,28 @@ import { SearchService } from 'src/app/services/search.service';
   templateUrl: './results-page.component.html',
   styleUrls: ['./results-page.component.css'],
 })
-export class ResultsPageComponent implements OnInit {
+export class ResultsPageComponent implements OnInit, OnDestroy {
   symbol: string | null = '';
   prices: any = [];
-  labels: any[] = [];
+  timer$ = timer(60000, 60000);
 
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService
   ) {}
 
-  ngOnInit(): void {
-    this.symbol = this.route.snapshot.paramMap.get('symbol');
+  convertPrices(): void {
     this.searchService
       .getIntradayPrices(this.symbol!)
       .subscribe((intradayPrices) => {
         const filteredPrices = intradayPrices.filter(
           (priceInfo: any) => priceInfo.close !== null
         );
-        // this.prices = filteredPrices.map((priceInfo: any) => priceInfo.close);
         this.prices = {
           datasets: [
             {
               data: filteredPrices.map((priceInfo: any) => priceInfo.close),
-              label: 'Series A',
+              label: 'Intraday stock price',
               backgroundColor: 'rgba(148,159,177,0.2)',
               borderColor: 'rgba(148,159,177,1)',
               pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -43,7 +41,20 @@ export class ResultsPageComponent implements OnInit {
           ],
           labels: filteredPrices.map((priceInfo: any) => priceInfo.label),
         };
-        this.labels = filteredPrices.map((priceInfo: any) => priceInfo.label);
       });
+  }
+
+  ngOnInit(): void {
+    this.symbol = this.route.snapshot.paramMap.get('symbol');
+    this.convertPrices();
+  }
+
+  timerSubscribe = this.timer$.subscribe((val) => {
+    console.log(val);
+    this.convertPrices();
+  });
+
+  ngOnDestroy(): void {
+    this.timerSubscribe.unsubscribe();
   }
 }
